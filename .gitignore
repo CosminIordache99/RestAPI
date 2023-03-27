@@ -5,3 +5,7 @@
 
 # Ignore .NET packages folder
 packages/
+
+obj/
+
+
