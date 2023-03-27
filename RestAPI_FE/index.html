@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<title>Customer Management System</title>
+</head>
+
+<body>
+	<h1>Create Customer</h1>
+	<form id="create-customer-form">
+		<label for="firstName">First Name:</label>
+		<input type="text" id="firstName" name="firstName" required>
+
+		<label for="lastName">Last Name:</label>
+		<input type="text" id="lastName" name="lastName" required>
+
+		<label for="email">Email:</label>
+		<input type="email" id="email" name="email" required>
+
+		<label for="phoneNumber">Phone Number:</label>
+		<input type="tel" id="phoneNumber" name="phoneNumber" required>
+
+		<label for="address">Address:</label>
+		<input type="text" id="address" name="address" required>
+
+		<button type="submit">Create Customer</button>
+	</form>
+
+	<div id="customers-container">
+		<!-- customers will be displayed here -->
+	</div>
+	<button onclick="displayCustomers()">Get All Customers</button>
+
+
+	<script src="APIRequests.js"></script>
+	<script>
+		const form = document.querySelector('#create-customer-form');
+		form.addEventListener('submit', (e) => {
+			e.preventDefault();
+
+			const customer = {
+				firstName: form.firstName.value,
+				lastName: form.lastName.value,
+				email: form.email.value,
+				phoneNumber: form.phoneNumber.value,
+				address: form.address.value
+			};
+			console.log('customer', customer)
+			Create(customer)
+		});
+
+
+		function displayCustomers() {
+			// create a new div for each customer and append it to the container
+			customers = GetAll()
+
+			const container = document.getElementById("customers-container");
+			container.innerHTML = "";
+			customers.forEach((customer) => {
+				const customerDiv = document.createElement("div");
+				customerDiv.innerText = `Name: ${customer.firstName} ${customer.lastName}, Email: ${customer.email}, Phone Number: ${customer.phoneNumber}, Address: ${customer.address}`;
+				container.appendChild(customerDiv);
+			});
+		}
+		function showList() {
+			fetch("./lib/examples/students.json")
+				.then(response => response.json())
+				.then(data => createList(data));
+		}
+
+	</script>
+</body>
+
+</html>
